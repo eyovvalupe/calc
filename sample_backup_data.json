@@ -1,0 +1,126 @@
+[
+  {
+    "id": "1696435200000",
+    "name": "10-04-23 (Morning)",
+    "savedAt": "2023-10-04T14:30:00.000Z",
+    "rows": [
+      { "id": 1, "source": "CBS Austin", "forecast": 97, "weight": 0.25 },
+      { "id": 2, "source": "KXAN", "forecast": 96, "weight": 0.2 },
+      { "id": 3, "source": "FOX", "forecast": 96, "weight": 0.2 },
+      { "id": 4, "source": "KVUE", "forecast": 95, "weight": 0.15 },
+      { "id": 5, "source": "WU", "forecast": 95, "weight": 0.0667 },
+      { "id": 6, "source": "NWS", "forecast": 96, "weight": 0.0667 },
+      { "id": 7, "source": "AW", "forecast": 96, "weight": 0.0667 }
+    ],
+    "scheme": [
+      { "label": "≤91", "max": 91 },
+      { "label": "92–93", "max": 93 },
+      { "label": "94–95", "max": 95 },
+      { "label": "96–97", "max": 97 },
+      { "label": "98–99", "max": 99 },
+      { "label": "100+", "max": null }
+    ],
+    "probs": [0.0, 0.0, 0.15, 0.75, 0.1, 0.0],
+    "weightMode": "manual",
+    "actual": 96
+  },
+  {
+    "id": "1696521600000",
+    "name": "10-05-23 (Evening)",
+    "savedAt": "2023-10-05T19:45:00.000Z",
+    "rows": [
+      { "id": 1, "source": "CBS Austin", "forecast": 99, "weight": 0.25 },
+      { "id": 2, "source": "KXAN", "forecast": 98, "weight": 0.2 },
+      { "id": 3, "source": "FOX", "forecast": 98, "weight": 0.2 },
+      { "id": 4, "source": "KVUE", "forecast": 97, "weight": 0.15 },
+      { "id": 5, "source": "WU", "forecast": 97, "weight": 0.0667 },
+      { "id": 6, "source": "NWS", "forecast": 98, "weight": 0.0667 },
+      { "id": 7, "source": "AW", "forecast": 99, "weight": 0.0667 }
+    ],
+    "scheme": [
+      { "label": "≤91", "max": 91 },
+      { "label": "92–93", "max": 93 },
+      { "label": "94–95", "max": 95 },
+      { "label": "96–97", "max": 97 },
+      { "label": "98–99", "max": 99 },
+      { "label": "100+", "max": null }
+    ],
+    "probs": [0.0, 0.0, 0.0, 0.25, 0.65, 0.1],
+    "weightMode": "manual",
+    "actual": 98
+  },
+  {
+    "id": "1696608000000",
+    "name": "10-06-23 (Hot Day)",
+    "savedAt": "2023-10-06T12:15:00.000Z",
+    "rows": [
+      { "id": 1, "source": "CBS Austin", "forecast": 102, "weight": 0.25 },
+      { "id": 2, "source": "KXAN", "forecast": 101, "weight": 0.2 },
+      { "id": 3, "source": "FOX", "forecast": 100, "weight": 0.2 },
+      { "id": 4, "source": "KVUE", "forecast": 101, "weight": 0.15 },
+      { "id": 5, "source": "WU", "forecast": 100, "weight": 0.0667 },
+      { "id": 6, "source": "NWS", "forecast": 102, "weight": 0.0667 },
+      { "id": 7, "source": "AW", "forecast": 101, "weight": 0.0667 }
+    ],
+    "scheme": [
+      { "label": "≤91", "max": 91 },
+      { "label": "92–93", "max": 93 },
+      { "label": "94–95", "max": 95 },
+      { "label": "96–97", "max": 97 },
+      { "label": "98–99", "max": 99 },
+      { "label": "100+", "max": null }
+    ],
+    "probs": [0.0, 0.0, 0.0, 0.0, 0.05, 0.95],
+    "weightMode": "manual",
+    "actual": 101
+  },
+  {
+    "id": "1696694400000",
+    "name": "10-07-23 (Cool Front)",
+    "savedAt": "2023-10-07T08:30:00.000Z",
+    "rows": [
+      { "id": 1, "source": "CBS Austin", "forecast": 93, "weight": 0.25 },
+      { "id": 2, "source": "KXAN", "forecast": 94, "weight": 0.2 },
+      { "id": 3, "source": "FOX", "forecast": 92, "weight": 0.2 },
+      { "id": 4, "source": "KVUE", "forecast": 93, "weight": 0.15 },
+      { "id": 5, "source": "WU", "forecast": 94, "weight": 0.0667 },
+      { "id": 6, "source": "NWS", "forecast": 93, "weight": 0.0667 },
+      { "id": 7, "source": "AW", "forecast": 92, "weight": 0.0667 }
+    ],
+    "scheme": [
+      { "label": "≤91", "max": 91 },
+      { "label": "92–93", "max": 93 },
+      { "label": "94–95", "max": 95 },
+      { "label": "96–97", "max": 97 },
+      { "label": "98–99", "max": 99 },
+      { "label": "100+", "max": null }
+    ],
+    "probs": [0.0, 0.6, 0.35, 0.05, 0.0, 0.0],
+    "weightMode": "manual",
+    "actual": 93
+  },
+  {
+    "id": "1696780800000",
+    "name": "10-08-23 (Auto-weights test)",
+    "savedAt": "2023-10-08T16:20:00.000Z",
+    "rows": [
+      { "id": 1, "source": "CBS Austin", "forecast": 95, "weight": 0.28 },
+      { "id": 2, "source": "KXAN", "forecast": 96, "weight": 0.22 },
+      { "id": 3, "source": "FOX", "forecast": 94, "weight": 0.18 },
+      { "id": 4, "source": "KVUE", "forecast": 95, "weight": 0.16 },
+      { "id": 5, "source": "WU", "forecast": 97, "weight": 0.06 },
+      { "id": 6, "source": "NWS", "forecast": 95, "weight": 0.05 },
+      { "id": 7, "source": "AW", "forecast": 94, "weight": 0.05 }
+    ],
+    "scheme": [
+      { "label": "≤91", "max": 91 },
+      { "label": "92–93", "max": 93 },
+      { "label": "94–95", "max": 95 },
+      { "label": "96–97", "max": 97 },
+      { "label": "98–99", "max": 99 },
+      { "label": "100+", "max": null }
+    ],
+    "probs": [0.0, 0.0, 0.7, 0.25, 0.05, 0.0],
+    "weightMode": "auto"
+  }
+]
