@@ -351,7 +351,7 @@ export default function BracketCalculator() {
           setSnapshots(parsed);
           setPriorId("");
           setAutoWeightsOverride(null);
-          alert("Backup imported.");
+          // alert("Backup imported.");
         }
       } catch (err) {
         alert("Could not read file.");
