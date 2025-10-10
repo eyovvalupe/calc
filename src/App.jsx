@@ -776,19 +776,6 @@ export default function BracketCalculator() {
             <div className="p-4 rounded-2xl border shadow bg-white">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="font-semibold">Saved forecasts</h3>
-                {currentSnapshotId && (
-                  <button
-                    className="px-2 py-1 text-xs rounded border bg-gray-100 hover:bg-gray-200"
-                    onClick={() => {
-                      setCurrentSnapshotId('');
-                      // Reset to empty rows
-                      updateCurrentRows([]);
-                    }}
-                    title="Clear loaded snapshot and return to tab's default rows"
-                  >
-                    Clear loaded snapshot
-                  </button>
-                )}
               </div>
               {displaySnapshots.length === 0 ? (
                 <p className="text-sm text-gray-600">No saved forecasts yet.</p>
