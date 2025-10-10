@@ -88,8 +88,14 @@ export default function BracketCalculator() {
   const tabRows = currentTabInfo.rows;
 
   // Global state for current session (not tab-specific)
-  const [scheme, setScheme] = useState(tabSnapshots[0]?.scheme || defaultScheme);
-  const [currentSnapshotId, setCurrentSnapshotId] = useState(tabSnapshots[0]?.id || '')
+  const [scheme, setScheme] = useState(() => {
+    // Safely access the first snapshot's scheme, fallback to defaultScheme
+    return (tabSnapshots && tabSnapshots.length > 0 && tabSnapshots[0]?.scheme) || defaultScheme;
+  });
+  const [currentSnapshotId, setCurrentSnapshotId] = useState(() => {
+    // Safely access the first snapshot's id, fallback to empty string
+    return (tabSnapshots && tabSnapshots.length > 0 && tabSnapshots[0]?.id) || '';
+  });
 
   // Helper function to save tab data to localStorage
   const saveTabDataToStorage = (newTabData) => {
@@ -259,8 +265,11 @@ export default function BracketCalculator() {
 
   // Functions to manage sources for current tab
   function addSource() {
-    const newId = Math.max(0, ...rows.map(r => r.id)) + 1;
-    const newRows = [...rows, { id: newId, source: "", forecast: 0, weight: 0 }];
+    // Safely handle empty or undefined rows array
+    const safeRows = Array.isArray(rows) ? rows : [];
+    const existingIds = safeRows.map(r => r?.id || 0);
+    const newId = Math.max(0, ...existingIds) + 1;
+    const newRows = [...safeRows, { id: newId, source: "", forecast: 0, weight: 0 }];
     console.log(newRows)
     updateCurrentTabData(newRows);
   }

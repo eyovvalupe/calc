@@ -225,7 +225,8 @@ export function calculateAccuracyTrendData(snapshots, bracketContainsActual) {
   let correct = 0;
   return withActual.map((s, i) => {
     const probs = s.probs || [];
-    let maxIdx = probs.reduce((best, v, i2) => (Number(v) > Number(probs[best]) ? i2 : best), 0);
+    // Safely handle empty probs array
+    let maxIdx = probs.length > 0 ? probs.reduce((best, v, i2) => (Number(v) > Number(probs[best]) ? i2 : best), 0) : -1;
     const isCorrect = maxIdx >= 0 && bracketContainsActual(s.scheme, maxIdx, s.actual);
     if (isCorrect) correct += 1;
     const pct = (correct / (i + 1)) * 100;
