@@ -1,0 +1,2041 @@
+[
+    {
+        "id": "1760053459142",
+        "name": "10-9-25 (13:40)",
+        "savedAt": "2025-10-09T23:44:19.142Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 94,
+                "weight": 0.12374021728693153
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 92,
+                "weight": 0.15086136080187545
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 93,
+                "weight": 0.1468383911804921
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 92,
+                "weight": 0.1295632863357283
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 92,
+                "weight": 0.14302440699398578
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 93,
+                "weight": 0.15511097659911136
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 94,
+                "weight": 0.15086136080187545
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤87",
+                "max": 87
+            },
+            {
+                "label": "88-89",
+                "max": 89
+            },
+            {
+                "label": "90-91",
+                "max": 91
+            },
+            {
+                "label": "92-93",
+                "max": 93
+            },
+            {
+                "label": "94-95",
+                "max": 95
+            },
+            {
+                "label": "96+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0,
+            0.10880976328667895,
+            0.5489691320511562,
+            0.3010308679488438,
+            0.041190236713321046
+        ],
+        "weightMode": "auto"
+    },
+    {
+        "id": "1759956552128",
+        "name": "10-8-25 (10:32)",
+        "savedAt": "2025-10-08T20:49:12.129Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 93,
+                "weight": 0.123513358094198
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 93,
+                "weight": 0.15096077100401975
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 93,
+                "weight": 0.1468807501660733
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 93,
+                "weight": 0.1293949465748741
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 93,
+                "weight": 0.14301546726696612
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 93,
+                "weight": 0.15527393588984892
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 93,
+                "weight": 0.15096077100401975
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤89",
+                "max": 89
+            },
+            {
+                "label": "90–91",
+                "max": 91
+            },
+            {
+                "label": "92–93",
+                "max": 93
+            },
+            {
+                "label": "94–95",
+                "max": 95
+            },
+            {
+                "label": "96–97",
+                "max": 97
+            },
+            {
+                "label": "98+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0.15,
+            0.7,
+            0.15,
+            0,
+            0
+        ],
+        "weightMode": "auto",
+        "actual": 93
+    },
+    {
+        "id": "1759875900137",
+        "name": "10-7-25 (12:19)",
+        "savedAt": "2025-10-07T22:25:00.137Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 94,
+                "weight": 0.12127460910245075
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 92,
+                "weight": 0.15858987344166633
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 94,
+                "weight": 0.1451879123057509
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 93,
+                "weight": 0.13048533890770017
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 94,
+                "weight": 0.1412101612836755
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 94,
+                "weight": 0.15385584736878077
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 94,
+                "weight": 0.14939625758997557
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤88",
+                "max": 88
+            },
+            {
+                "label": "89–90",
+                "max": 90
+            },
+            {
+                "label": "91–92",
+                "max": 92
+            },
+            {
+                "label": "93–94",
+                "max": 94
+            },
+            {
+                "label": "95–96",
+                "max": 96
+            },
+            {
+                "label": "97+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0.02378848101624995,
+            0.2372244303929165,
+            0.6127755696070836,
+            0.12621151898375005,
+            0
+        ],
+        "weightMode": "auto",
+        "actual": 95
+    },
+    {
+        "id": "1759820332351",
+        "name": "10-6-25 (20:57)",
+        "savedAt": "2025-10-07T06:58:52.351Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 90,
+                "weight": 0.13400923577033244
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 92,
+                "weight": 0.16554082065746947
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 93,
+                "weight": 0.1384029812054253
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 93,
+                "weight": 0.12235625874682526
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 92,
+                "weight": 0.14309460768696516
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 94,
+                "weight": 0.14309460768696516
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 92,
+                "weight": 0.15350148824601717
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤90",
+                "max": 90
+            },
+            {
+                "label": "91–92",
+                "max": 92
+            },
+            {
+                "label": "93–94",
+                "max": 94
+            },
+            {
+                "label": "95–96",
+                "max": 96
+            },
+            {
+                "label": "97–98",
+                "max": 98
+            },
+            {
+                "label": "99+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0.1631270025278005,
+            0.4242766894902984,
+            0.3520182308360188,
+            0.06057807714588237,
+            0,
+            0
+        ],
+        "weightMode": "auto",
+        "actual": 95
+    },
+    {
+        "id": "1759799321920",
+        "name": "10-6-25 (15:07)",
+        "savedAt": "2025-10-07T01:08:41.920Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 90,
+                "weight": 0.13400923577033244
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 92,
+                "weight": 0.16554082065746947
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 93,
+                "weight": 0.1384029812054253
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 93,
+                "weight": 0.12235625874682526
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 92,
+                "weight": 0.14309460768696516
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 93,
+                "weight": 0.14309460768696516
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 92,
+                "weight": 0.15350148824601717
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤90",
+                "max": 90
+            },
+            {
+                "label": "91–92",
+                "max": 92
+            },
+            {
+                "label": "93–94",
+                "max": 94
+            },
+            {
+                "label": "95–96",
+                "max": 96
+            },
+            {
+                "label": "97–98",
+                "max": 98
+            },
+            {
+                "label": "99+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0.1631270025278005,
+            0.4242766894902984,
+            0.3520182308360188,
+            0.06057807714588237,
+            0,
+            0
+        ],
+        "weightMode": "auto",
+        "actual": 95
+    },
+    {
+        "id": "1759705604669",
+        "name": "10-5-25 (13:03)",
+        "savedAt": "2025-10-05T23:06:44.669Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 93,
+                "weight": 0.13837473745864545
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 94,
+                "weight": 0.1672028077625299
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 95,
+                "weight": 0.13376224621002394
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 93,
+                "weight": 0.12540210582189745
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 94,
+                "weight": 0.14331669236788278
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 94,
+                "weight": 0.14331669236788278
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 95,
+                "weight": 0.1486247180111377
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤89",
+                "max": 89
+            },
+            {
+                "label": "90–91",
+                "max": 91
+            },
+            {
+                "label": "92–93",
+                "max": 93
+            },
+            {
+                "label": "94–95",
+                "max": 95
+            },
+            {
+                "label": "96–97",
+                "max": 97
+            },
+            {
+                "label": "98+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0.039566526492081436,
+            0.29507726380429855,
+            0.5549227361957014,
+            0.11043347350791854,
+            0
+        ],
+        "weightMode": "auto",
+        "actual": 95
+    },
+    {
+        "id": "1759587599766",
+        "name": "10-4-25 (04:14)",
+        "savedAt": "2025-10-04T14:19:59.766Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 93,
+                "weight": 0.13408874906985138
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 93,
+                "weight": 0.1723998202326661
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 93,
+                "weight": 0.12929986517449957
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 92,
+                "weight": 0.12929986517449957
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 93,
+                "weight": 0.13924600864946107
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 93,
+                "weight": 0.1448158489954395
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 94,
+                "weight": 0.15084984270358281
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤89",
+                "max": 89
+            },
+            {
+                "label": "90–91",
+                "max": 91
+            },
+            {
+                "label": "92–93",
+                "max": 93
+            },
+            {
+                "label": "94–95",
+                "max": 95
+            },
+            {
+                "label": "96–97",
+                "max": 97
+            },
+            {
+                "label": "98+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0.12737252359446258,
+            0.6170325865130294,
+            0.23296741348697053,
+            0.02262747640553742,
+            0
+        ],
+        "weightMode": "auto",
+        "actual": 94
+    },
+    {
+        "id": "1759563231229",
+        "name": "10-3-25 (21:02)",
+        "savedAt": "2025-10-04T07:33:51.230Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 93,
+                "weight": 0.13408874906985138
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 94,
+                "weight": 0.1723998202326661
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 93,
+                "weight": 0.12929986517449957
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 92,
+                "weight": 0.12929986517449957
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 93,
+                "weight": 0.13924600864946107
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 92,
+                "weight": 0.1448158489954395
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 95,
+                "weight": 0.15084984270358281
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤88",
+                "max": 88
+            },
+            {
+                "label": "89–90",
+                "max": 90
+            },
+            {
+                "label": "91–92",
+                "max": 92
+            },
+            {
+                "label": "93–94",
+                "max": 94
+            },
+            {
+                "label": "95–96",
+                "max": 96
+            },
+            {
+                "label": "97+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0.0375,
+            0.26499999999999996,
+            0.48,
+            0.195,
+            0.0225
+        ],
+        "weightMode": "auto",
+        "actual": 93
+    },
+    {
+        "id": "1759563084321",
+        "name": "10-3-25 (21:02)",
+        "savedAt": "2025-10-04T07:31:24.321Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 96,
+                "weight": 0.1324986945347575
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 96,
+                "weight": 0.17127880025224748
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 95,
+                "weight": 0.1324986945347575
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 96,
+                "weight": 0.12768056018803906
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 95,
+                "weight": 0.14331491449677852
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 96,
+                "weight": 0.14331491449677852
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 96,
+                "weight": 0.14941342149664144
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤91",
+                "max": 91
+            },
+            {
+                "label": "92–93",
+                "max": 93
+            },
+            {
+                "label": "94–95",
+                "max": 95
+            },
+            {
+                "label": "96–97",
+                "max": 97
+            },
+            {
+                "label": "98–99",
+                "max": 99
+            },
+            {
+                "label": "100+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0.045,
+            0.315,
+            0.535,
+            0.10499999999999998,
+            0
+        ],
+        "weightMode": "auto",
+        "actual": 96
+    },
+    {
+        "id": "1759562957805",
+        "name": "10-3-25 (21:02)",
+        "savedAt": "2025-10-04T07:29:17.805Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 96,
+                "weight": 0.1314550015347001
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 96,
+                "weight": 0.17089150199511013
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 96,
+                "weight": 0.1314550015347001
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 96,
+                "weight": 0.12658629777415567
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 96,
+                "weight": 0.14240958499592513
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 95,
+                "weight": 0.1486013060827045
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 96,
+                "weight": 0.1486013060827045
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤92",
+                "max": 92
+            },
+            {
+                "label": "93–94",
+                "max": 94
+            },
+            {
+                "label": "95–96",
+                "max": 96
+            },
+            {
+                "label": "97–98",
+                "max": 98
+            },
+            {
+                "label": "99–100",
+                "max": 100
+            },
+            {
+                "label": "101+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0.15000000000000002,
+            0.7,
+            0.15000000000000002,
+            0,
+            0
+        ],
+        "weightMode": "auto",
+        "actual": 96
+    },
+    {
+        "id": "1759562681488",
+        "name": "10-3-25 (21:02)",
+        "savedAt": "2025-10-04T07:24:41.488Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 93,
+                "weight": 0.1354735714168355
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 94,
+                "weight": 0.17208805017814235
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 94,
+                "weight": 0.12994403788961773
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 94,
+                "weight": 0.12484819326649547
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 94,
+                "weight": 0.1414946190353615
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 94,
+                "weight": 0.1480757641067737
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 94,
+                "weight": 0.1480757641067737
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤90",
+                "max": 90
+            },
+            {
+                "label": "91–92",
+                "max": 92
+            },
+            {
+                "label": "93–94",
+                "max": 94
+            },
+            {
+                "label": "95–96",
+                "max": 96
+            },
+            {
+                "label": "97–98",
+                "max": 98
+            },
+            {
+                "label": "99+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0.15000000000000002,
+            0.7,
+            0.15000000000000002,
+            0,
+            0
+        ],
+        "weightMode": "auto",
+        "actual": 95
+    },
+    {
+        "id": "1759562453284",
+        "name": "10-3-25 (21:02)",
+        "savedAt": "2025-10-04T07:20:53.284Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 92,
+                "weight": 0.14027998404407238
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 91,
+                "weight": 0.1732870391132659
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 91,
+                "weight": 0.1280817245619791
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 89,
+                "weight": 0.12274498603856333
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 91,
+                "weight": 0.14027998404407238
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 92,
+                "weight": 0.15504629815397475
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 90,
+                "weight": 0.14027998404407238
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤88",
+                "max": 88
+            },
+            {
+                "label": "89–90",
+                "max": 90
+            },
+            {
+                "label": "91–92",
+                "max": 92
+            },
+            {
+                "label": "93–94",
+                "max": 94
+            },
+            {
+                "label": "95–96",
+                "max": 96
+            },
+            {
+                "label": "97+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0.04500278678198144,
+            0.3150102182005986,
+            0.5349897817994014,
+            0.10499721321801857,
+            0,
+            0
+        ],
+        "weightMode": "auto",
+        "actual": 90
+    },
+    {
+        "id": "1759562347801",
+        "name": "10-3-25 (21:02)",
+        "savedAt": "2025-10-04T07:19:07.802Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 93,
+                "weight": 0.14527396940815399
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 92,
+                "weight": 0.17168741839145468
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 92,
+                "weight": 0.12590410682040012
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 92,
+                "weight": 0.12054648525357457
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 92,
+                "weight": 0.1381874343150733
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 92,
+                "weight": 0.15312661640318934
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 91,
+                "weight": 0.14527396940815399
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤88",
+                "max": 88
+            },
+            {
+                "label": "89–90",
+                "max": 90
+            },
+            {
+                "label": "91–92",
+                "max": 92
+            },
+            {
+                "label": "93–94",
+                "max": 94
+            },
+            {
+                "label": "95–96",
+                "max": 96
+            },
+            {
+                "label": "97+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0.13083214637063753,
+            0.6297178700256709,
+            0.22028212997432906,
+            0.019167853629362464,
+            0
+        ],
+        "weightMode": "auto",
+        "actual": 92
+    },
+    {
+        "id": "1759562194517",
+        "name": "10-3-25 (21:02)",
+        "savedAt": "2025-10-04T07:16:34.517Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 94,
+                "weight": 0.14819879708768596
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 93,
+                "weight": 0.1667236467236467
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 94,
+                "weight": 0.1270275403608737
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 94,
+                "weight": 0.12125356125356124
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 94,
+                "weight": 0.14039886039886038
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 93,
+                "weight": 0.14819879708768596
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 94,
+                "weight": 0.14819879708768596
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤89",
+                "max": 88
+            },
+            {
+                "label": "90–91",
+                "max": 90
+            },
+            {
+                "label": "92–93",
+                "max": 92
+            },
+            {
+                "label": "94–95",
+                "max": 94
+            },
+            {
+                "label": "96–97",
+                "max": 96
+            },
+            {
+                "label": "98+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0,
+            0.15000000000000002,
+            0.7,
+            0.15000000000000002,
+            0
+        ],
+        "weightMode": "auto",
+        "actual": 93
+    },
+    {
+        "id": "1759562053583",
+        "name": "10-3-25 (21:02)",
+        "savedAt": "2025-10-04T07:14:13.583Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 94,
+                "weight": 0.1488991954139725
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 94,
+                "weight": 0.16943701547107215
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 94,
+                "weight": 0.12599162688874593
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 91,
+                "weight": 0.12599162688874593
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 94,
+                "weight": 0.1403906699617455
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 93,
+                "weight": 0.1403906699617455
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 92,
+                "weight": 0.1488991954139725
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤89",
+                "max": 88
+            },
+            {
+                "label": "90–91",
+                "max": 90
+            },
+            {
+                "label": "92–93",
+                "max": 92
+            },
+            {
+                "label": "94–95",
+                "max": 94
+            },
+            {
+                "label": "96–97",
+                "max": 96
+            },
+            {
+                "label": "98+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0.04263381501698038,
+            0.3063239883955947,
+            0.5436760116044052,
+            0.10736618498301961,
+            0
+        ],
+        "weightMode": "auto",
+        "actual": 93
+    },
+    {
+        "id": "1759561811308",
+        "name": "10-3-25 (21:02)",
+        "savedAt": "2025-10-04T07:10:11.308Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 93,
+                "weight": 0.13989220552446685
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 91,
+                "weight": 0.18652294069928912
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 93,
+                "weight": 0.11780396254691945
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 92,
+                "weight": 0.12434862713285942
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 93,
+                "weight": 0.13166325225832173
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 92,
+                "weight": 0.13989220552446685
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 91,
+                "weight": 0.1598768063136764
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤88",
+                "max": 88
+            },
+            {
+                "label": "89–90",
+                "max": 90
+            },
+            {
+                "label": "91–92",
+                "max": 92
+            },
+            {
+                "label": "93–94",
+                "max": 94
+            },
+            {
+                "label": "95–96",
+                "max": 96
+            },
+            {
+                "label": "97+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0.10157909977738765,
+            0.5224566991837547,
+            0.3275433008162452,
+            0.04842090022261235,
+            0
+        ],
+        "weightMode": "auto",
+        "actual": 93
+    },
+    {
+        "id": "1759561725358",
+        "name": "10-3-25 (21:02)",
+        "savedAt": "2025-10-04T07:08:45.359Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 93,
+                "weight": 0.1277856908624164
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 91,
+                "weight": 0.20849244298604783
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 93,
+                "weight": 0.10706368693878132
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 91,
+                "weight": 0.1277856908624164
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 93,
+                "weight": 0.12004110353742148
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 92,
+                "weight": 0.13659849712879
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 91,
+                "weight": 0.17223288768412648
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤88",
+                "max": 88
+            },
+            {
+                "label": "89–90",
+                "max": 90
+            },
+            {
+                "label": "91–92",
+                "max": 92
+            },
+            {
+                "label": "93–94",
+                "max": 94
+            },
+            {
+                "label": "95–96",
+                "max": 96
+            },
+            {
+                "label": "97+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0.10157909977738765,
+            0.5224566991837547,
+            0.3275433008162452,
+            0.04842090022261235,
+            0
+        ],
+        "weightMode": "auto",
+        "actual": 93
+    },
+    {
+        "id": "1759561464473",
+        "name": "10-3-25 (21:02)",
+        "savedAt": "2025-10-04T07:04:24.473Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 92,
+                "weight": 0.11199391888223265
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 90,
+                "weight": 0.23998696903335567
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 91,
+                "weight": 0.09881816371961702
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 90,
+                "weight": 0.12922375255642224
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 91,
+                "weight": 0.11199391888223265
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 90,
+                "weight": 0.13999239860279078
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 91,
+                "weight": 0.16799087832334894
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤84",
+                "max": 84
+            },
+            {
+                "label": "85–86",
+                "max": 86
+            },
+            {
+                "label": "87–88",
+                "max": 88
+            },
+            {
+                "label": "89–90",
+                "max": 90
+            },
+            {
+                "label": "91–92",
+                "max": 92
+            },
+            {
+                "label": "93+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0,
+            0.08354651062727428,
+            0.456337205633339,
+            0.39366279436666096,
+            0.06645348937272572
+        ],
+        "weightMode": "auto",
+        "actual": 92
+    },
+    {
+        "id": "1759561331172",
+        "name": "10-3-25 (20:32)",
+        "savedAt": "2025-10-04T07:02:11.172Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 90,
+                "weight": 0.10540729720247412
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 90,
+                "weight": 0.2927980477846503
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 91,
+                "weight": 0.08500588484070493
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 90,
+                "weight": 0.12548487762199298
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 91,
+                "weight": 0.0975993492615501
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 90,
+                "weight": 0.13869381210851855
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 91,
+                "weight": 0.155010731180109
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤84",
+                "max": 84
+            },
+            {
+                "label": "85–86",
+                "max": 86
+            },
+            {
+                "label": "87–88",
+                "max": 88
+            },
+            {
+                "label": "89–90",
+                "max": 90
+            },
+            {
+                "label": "91–92",
+                "max": 92
+            },
+            {
+                "label": "93+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0,
+            0.09999500049995,
+            0.5166483351664832,
+            0.33335166483351664,
+            0.050004999500049996
+        ],
+        "weightMode": "auto",
+        "actual": 92
+    },
+    {
+        "id": "1759561235270",
+        "name": "10-3-25 (20:32)",
+        "savedAt": "2025-10-04T07:00:35.270Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 90,
+                "weight": 0.09549071618037136
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 91,
+                "weight": 0.3183023872679045
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 87,
+                "weight": 0.09549071618037136
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 91,
+                "weight": 0.10610079575596816
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 88,
+                "weight": 0.10610079575596816
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 93,
+                "weight": 0.11936339522546419
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 90,
+                "weight": 0.15915119363395225
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤84",
+                "max": 84
+            },
+            {
+                "label": "85–86",
+                "max": 86
+            },
+            {
+                "label": "87–88",
+                "max": 88
+            },
+            {
+                "label": "89–90",
+                "max": 90
+            },
+            {
+                "label": "91–92",
+                "max": 92
+            },
+            {
+                "label": "93+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0.04000099990001,
+            0.23417158284171585,
+            0.3141635836416358,
+            0.3124837516248375,
+            0.09918008199180081
+        ],
+        "weightMode": "auto",
+        "actual": 92
+    },
+    {
+        "id": "1759561113157",
+        "name": "10-3-25 (20:32)",
+        "savedAt": "2025-10-04T06:58:33.157Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 90,
+                "weight": 0.07469591821505858
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 91,
+                "weight": 0.3734795910752929
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 88,
+                "weight": 0.1018580702932617
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 89,
+                "weight": 0.1018580702932617
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 89,
+                "weight": 0.1018580702932617
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 93,
+                "weight": 0.08618759794045218
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 90,
+                "weight": 0.16006268188941122
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤84",
+                "max": 84
+            },
+            {
+                "label": "85–86",
+                "max": 86
+            },
+            {
+                "label": "87–88",
+                "max": 88
+            },
+            {
+                "label": "89–90",
+                "max": 90
+            },
+            {
+                "label": "91–92",
+                "max": 92
+            },
+            {
+                "label": "93+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0.029997000299970003,
+            0.21998800119988002,
+            0.43333666633336665,
+            0.23999600039996,
+            0.07668233176682332
+        ],
+        "weightMode": "auto",
+        "actual": 92
+    },
+    {
+        "id": "1759560848082",
+        "name": "10-3-25 (20:32)",
+        "savedAt": "2025-10-04T06:54:08.082Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 98,
+                "weight": 0.07547169811320754
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 100,
+                "weight": 0.3773584905660377
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 99,
+                "weight": 0.09433962264150943
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 99,
+                "weight": 0.09433962264150943
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 99,
+                "weight": 0.09433962264150943
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 99,
+                "weight": 0.07547169811320754
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 101,
+                "weight": 0.18867924528301885
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤94",
+                "max": 94
+            },
+            {
+                "label": "95–96",
+                "max": 96
+            },
+            {
+                "label": "97–98",
+                "max": 98
+            },
+            {
+                "label": "99–100",
+                "max": 100
+            },
+            {
+                "label": "101–102",
+                "max": 102
+            },
+            {
+                "label": "103+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0.0374962503749625,
+            0.2774822517748225,
+            0.5258324167583242,
+            0.14918508149185084,
+            0.010003999600039996
+        ],
+        "weightMode": "auto",
+        "actual": 100
+    },
+    {
+        "id": "1759560631298",
+        "name": "10-3-25 (20:32)",
+        "savedAt": "2025-10-04T06:50:31.298Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 97,
+                "weight": 0.09999999999999999
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 99,
+                "weight": 0.19999999999999998
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 97,
+                "weight": 0.15
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 98,
+                "weight": 0.15
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 97,
+                "weight": 0.15
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 97,
+                "weight": 0.09999999999999999
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 100,
+                "weight": 0.15
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤91",
+                "max": 91
+            },
+            {
+                "label": "92–93",
+                "max": 93
+            },
+            {
+                "label": "94–95",
+                "max": 95
+            },
+            {
+                "label": "96–97",
+                "max": 97
+            },
+            {
+                "label": "98–99",
+                "max": 99
+            },
+            {
+                "label": "100+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0,
+            0.08750124987501251,
+            0.46083391660833917,
+            0.3524847515248475,
+            0.09918008199180081
+        ],
+        "weightMode": "auto",
+        "actual": 99
+    },
+    {
+        "id": "1759560506265",
+        "name": "10-3-25 (20:32)",
+        "savedAt": "2025-10-04T06:48:26.267Z",
+        "rows": [
+            {
+                "id": 1,
+                "source": "CBS Austin",
+                "forecast": 97,
+                "weight": 0.1048951048951049
+            },
+            {
+                "id": 2,
+                "source": "KXAN",
+                "forecast": 99,
+                "weight": 0.14685314685314688
+            },
+            {
+                "id": 3,
+                "source": "FOX",
+                "forecast": 98,
+                "weight": 0.14685314685314688
+            },
+            {
+                "id": 4,
+                "source": "KVUE",
+                "forecast": 97,
+                "weight": 0.24475524475524477
+            },
+            {
+                "id": 5,
+                "source": "WU",
+                "forecast": 98,
+                "weight": 0.14685314685314688
+            },
+            {
+                "id": 6,
+                "source": "NWS",
+                "forecast": 97,
+                "weight": 0.1048951048951049
+            },
+            {
+                "id": 7,
+                "source": "AW",
+                "forecast": 99,
+                "weight": 0.1048951048951049
+            }
+        ],
+        "scheme": [
+            {
+                "label": "≤91",
+                "max": 91
+            },
+            {
+                "label": "92–93",
+                "max": 93
+            },
+            {
+                "label": "94–95",
+                "max": 95
+            },
+            {
+                "label": "96–97",
+                "max": 97
+            },
+            {
+                "label": "98–99",
+                "max": 99
+            },
+            {
+                "label": "100+",
+                "max": null
+            }
+        ],
+        "probs": [
+            0,
+            0,
+            0.06999800019998,
+            0.4066593340665933,
+            0.4433406659334067,
+            0.08000199980002001
+        ],
+        "weightMode": "auto",
+        "actual": 99
+    }
+]

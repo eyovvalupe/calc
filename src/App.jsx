@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState, useRef } from "react";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
-import { defaultScheme, defaultRows } from './types.js';
+
 import {
   findBracket,
   clamp,
@@ -26,7 +26,7 @@ export default function BracketCalculator() {
   const [activeTab, setActiveTab] = useState('KAUS');
   const tabs = ['KAUS', 'KMIA', 'KMDW', 'KLAX', 'KNYC', 'KPHL', 'KDEN'];
 
-  // Simplified tab data structure - each tab directly contains snapshots array
+  // Simplified tab data structure - each tab only contains snapshots array (no tab-level rows)
   const [tabData, setTabData] = useState(() => {
     // Try to load from existing snapshots system
     try {
@@ -34,32 +34,36 @@ export default function BracketCalculator() {
       const tabSourcesConfig = existingSnapshots.find(s => s.id === 'tab_sources_config');
 
       if (tabSourcesConfig && tabSourcesConfig.tabSources) {
-        // Check if it's the new structure with rows and snapshots
+        // Check if it's the new structure with snapshots only
         const hasNewStructure = tabs.every(tab => {
           const tabInfo = tabSourcesConfig.tabSources[tab];
           return tabInfo && typeof tabInfo === 'object' &&
-            Array.isArray(tabInfo.snapshots) &&
-            Array.isArray(tabInfo.rows);
+            Array.isArray(tabInfo.snapshots);
         });
 
         if (hasNewStructure) {
           return tabSourcesConfig.tabSources;
         }
 
-        // Migrate from old structure (arrays) to new structure (objects with rows + snapshots)
+        // Migrate from old structure to new structure (snapshots only)
         const migratedData = {};
         tabs.forEach(tab => {
           const oldTabData = tabSourcesConfig.tabSources[tab];
           if (Array.isArray(oldTabData)) {
             // Old structure: tab was just an array of snapshots
+            // Legacy snapshots already have rows data, save them directly
             migratedData[tab] = {
-              rows: defaultRows.map((row, index) => ({ ...row, id: index + 1 })),
               snapshots: oldTabData
+            };
+          } else if (oldTabData && oldTabData.snapshots) {
+            // Handle case where tab has both rows and snapshots - keep only snapshots
+            // Legacy snapshots already have rows data, save them directly
+            migratedData[tab] = {
+              snapshots: oldTabData.snapshots
             };
           } else {
             // Fallback
             migratedData[tab] = {
-              rows: defaultRows.map((row, index) => ({ ...row, id: index + 1 })),
               snapshots: []
             };
           }
@@ -70,31 +74,47 @@ export default function BracketCalculator() {
       console.warn('Failed to load saved tab sources from snapshots:', error);
     }
 
-    // Fallback to default initialization - each tab has rows and empty snapshots
-    console.log("No existing data found, initializing all tabs with default rows and empty snapshots");
+    // Fallback to completely empty initialization - no default data
+    console.log("No existing data found, initializing all tabs with empty snapshots");
     const initialTabData = {};
     tabs.forEach(tab => {
       initialTabData[tab] = {
-        rows: defaultRows.map((row, index) => ({ ...row, id: index + 1 })),
         snapshots: []
       };
     });
     return initialTabData;
   });
 
-  // Get current tab's data (rows and snapshots)
-  const currentTabInfo = tabData[activeTab] || { rows: [], snapshots: [] };
+  // Get current tab's data (snapshots only - no tab-level rows)
+  const currentTabInfo = tabData[activeTab] || { snapshots: [] };
   const tabSnapshots = Array.isArray(currentTabInfo.snapshots) ? currentTabInfo.snapshots : [];
-  const tabRows = Array.isArray(currentTabInfo.rows) ? currentTabInfo.rows : [];
 
   // Global state for current session (not tab-specific)
   const [scheme, setScheme] = useState(() => {
-    // Safely access the first snapshot's scheme, fallback to defaultScheme
-    return (tabSnapshots && tabSnapshots.length > 0 && tabSnapshots[0]?.scheme) || defaultScheme;
+    // Safely access the first snapshot's scheme, no default fallback
+    if (tabSnapshots && tabSnapshots.length > 0 && tabSnapshots[0]?.scheme) {
+      return tabSnapshots[0].scheme;
+    }
+    return []; // Empty scheme if no data
   });
   const [currentSnapshotId, setCurrentSnapshotId] = useState(() => {
     // Safely access the first snapshot's id, fallback to empty string
     return (tabSnapshots && tabSnapshots.length > 0 && tabSnapshots[0]?.id) || '';
+  });
+
+  // Current rows state (since we no longer have tab-level rows)
+  const [rows, setRows] = useState(() => {
+    // First, check if there's a working state snapshot
+    const workingState = tabSnapshots.find(s => s.id === 'working_state');
+    if (workingState && workingState.rows) {
+      return workingState.rows;
+    }
+
+    // If there's a first snapshot with rows, use those; otherwise empty
+    if (tabSnapshots && tabSnapshots.length > 0 && tabSnapshots[0]?.rows) {
+      return tabSnapshots[0].rows;
+    }
+    return []; // Empty rows if no data
   });
 
   // Helper function to save tab data to localStorage
@@ -115,22 +135,33 @@ export default function BracketCalculator() {
     }
   };
 
-  // Helper function to update current tab's rows
-  const updateCurrentTabData = (updatedRows) => {
-    const newTabData = {
-      ...tabData,
-      [activeTab]: {
-        ...tabData[activeTab],
-        rows: updatedRows
-      }
+  // Helper function to save working state to tab data
+  const saveWorkingStateToTab = (workingRows) => {
+    // Save current working state as a special "working" snapshot in the tab
+    const workingSnapshot = {
+      id: 'working_state',
+      name: 'Working State (Auto-saved)',
+      savedAt: new Date().toISOString(),
+      scheme: scheme,
+      rows: workingRows,
+      weightMode: useAutoWeights ? "auto" : "manual",
+      isWorkingState: true // Mark as working state
     };
 
-    setTabData(newTabData);
-    saveTabDataToStorage(newTabData);
+    // Update or add working state snapshot
+    const updatedSnapshots = tabSnapshots.filter(s => s.id !== 'working_state');
+    updatedSnapshots.unshift(workingSnapshot); // Add at beginning
+    updateTabSnapshots(updatedSnapshots);
   };
 
-  // Use rows from current tab
-  const rows = tabRows;
+  // Helper function to update current rows and save working state
+  const updateCurrentRows = (updatedRows) => {
+    setRows(updatedRows);
+
+    // Auto-save working state to tab data
+    saveWorkingStateToTab(updatedRows);
+  };
+
   // Use global scheme (not tab-specific)
   const tabScheme = scheme;
 
@@ -156,6 +187,30 @@ export default function BracketCalculator() {
   const [lastSaved, setLastSaved] = useState(null);
 
   const [saveName, setSaveName] = useState(defaultSaveLabel());
+
+  // Auto-save working state when scheme changes
+  useEffect(() => {
+    if (rows.length > 0) { // Only save if we have rows data
+      saveWorkingStateToTab(rows);
+    }
+  }, [scheme]); // Dependency on scheme changes
+
+  // Load working state when switching tabs
+  useEffect(() => {
+    const newTabSnapshots = tabData[activeTab]?.snapshots || [];
+    const workingState = newTabSnapshots.find(s => s.id === 'working_state');
+
+    if (workingState && workingState.rows) {
+      setRows(workingState.rows);
+      if (workingState.scheme) {
+        setScheme(workingState.scheme);
+      }
+      setUseAutoWeights(workingState.weightMode === "auto");
+    } else {
+      // No working state, use empty rows
+      setRows([]);
+    }
+  }, [activeTab]); // Dependency on active tab changes
   const [actualInput, setActualInput] = useState("");
   const [actualAttachIds, setActualAttachIds] = useState([]);
 
@@ -173,16 +228,21 @@ export default function BracketCalculator() {
     if (!tabSourcesConfig && loadedSnapshots.length > 0) {
       // Migrate existing snapshots to KAUS tab for backward compatibility
       console.log("Migrating legacy snapshots to KAUS tab");
+      const legacySnapshots = loadedSnapshots.filter(s => s.id !== 'tab_sources_config');
+
+      // Legacy snapshots already have rows data, save them directly
       const migratedTabData = { ...tabData };
-      migratedTabData.KAUS = loadedSnapshots.filter(s => s.id !== 'tab_sources_config');
+      migratedTabData.KAUS = {
+        snapshots: legacySnapshots
+      };
       setTabData(migratedTabData);
     }
   }, []);
 
 
 
-  // Use current tab's snapshots
-  const displaySnapshots = tabSnapshots;
+  // Use current tab's snapshots (filter out working state)
+  const displaySnapshots = tabSnapshots.filter(s => s.id !== 'working_state');
 
   // File input ref for uploads
   const fileInputRef = useRef(null);
@@ -285,9 +345,12 @@ export default function BracketCalculator() {
   function handleSetUseAutoWeights(checked) {
     setUseAutoWeights(checked);
     if (!checked) setAutoWeightsOverride(null);
+
+    // Auto-save working state when weight mode changes
+    saveWorkingStateToTab(rows);
   }
 
-  // Functions to manage sources for current tab
+  // Functions to manage sources
   function addSource() {
     // Safely handle empty or undefined rows array
     const safeRows = Array.isArray(rows) ? rows : [];
@@ -295,12 +358,12 @@ export default function BracketCalculator() {
     const newId = Math.max(0, ...existingIds) + 1;
     const newRows = [...safeRows, { id: newId, source: "", forecast: 0, weight: 0 }];
     console.log(newRows)
-    updateCurrentTabData(newRows);
+    updateCurrentRows(newRows);
   }
 
   function removeSource(id) {
     const newRows = rows.filter(r => r.id !== id);
-    updateCurrentTabData(newRows);
+    updateCurrentRows(newRows);
   }
 
   function updateSource(id, field, value) {
@@ -315,7 +378,7 @@ export default function BracketCalculator() {
       }
       return r;
     });
-    updateCurrentTabData(updatedRows);
+    updateCurrentRows(updatedRows);
   }
 
   // Snapshot actions - Save to current tab
@@ -331,6 +394,7 @@ export default function BracketCalculator() {
       scheme: tabScheme,
       probs,
       weightMode: useAutoWeights ? "auto" : "manual",
+      rows: rows.map(r => ({ ...r })), // Save current rows data with the snapshot
     };
 
     // Add to current tab's snapshots
@@ -388,8 +452,17 @@ export default function BracketCalculator() {
     }
 
     // Apply the snapshot's data to current session
-    // Note: rows are not stored in snapshots anymore, they're in the tab
+    console.log("Loading snapshot:", snap.name, "with rows:", snap.rows);
 
+    // Load rows data from snapshot
+    if (snap.rows && Array.isArray(snap.rows)) {
+      console.log("Loading rows from snapshot:", snap.rows);
+      updateCurrentRows(snap.rows);
+    } else {
+      console.warn("No rows data in snapshot, keeping current rows");
+    }
+
+    // Load scheme from snapshot
     if (snap.scheme) {
       console.log("Loading scheme:", snap.scheme);
       setScheme(snap.scheme);
@@ -397,6 +470,7 @@ export default function BracketCalculator() {
       console.warn("No scheme in snapshot, keeping current scheme");
     }
 
+    // Load weight mode and settings
     const wasAuto = snap.weightMode === "auto";
     console.log("Weight mode:", snap.weightMode, "wasAuto:", wasAuto);
     setUseAutoWeights(wasAuto);
@@ -435,23 +509,30 @@ export default function BracketCalculator() {
           // Save only the tab_sources_config to localStorage
           saveSnapshots([tabSourcesConfig]);
 
+          // Set currentSnapshotId to the first snapshot of the first tab and load its data
+          const firstTab = tabs[0]; // Should be 'KAUS'
+          const firstTabSnapshots = tabSourcesConfig.tabSources[firstTab]?.snapshots || [];
+          if (firstTabSnapshots.length > 0) {
+            const firstSnapshot = firstTabSnapshots[0];
+            setCurrentSnapshotId(firstSnapshot.id);
+            setActiveTab(firstTab);
+            setRows(firstSnapshot.rows);
+            setScheme(firstSnapshot.scheme);
+            // Load the first snapshot's data
+            applySnapshotInputs(firstSnapshot);
+          }
+
         } else {
           // No tab structure - treat as legacy data for KAUS tab
 
           const legacySnapshots = uploadedData.filter(s => s.id !== 'tab_sources_config');
 
-          // Clean legacy snapshots by removing rows field (since rows are now in tabs)
-          const cleanedSnapshots = legacySnapshots.map(snapshot => {
-            const { rows, ...snapshotWithoutRows } = snapshot;
-            return snapshotWithoutRows;
-          });
-
-          // Create new tab structure with KAUS containing the cleaned legacy snapshots
+          // Legacy snapshots already have rows data, save them directly
+          // Create new tab structure with KAUS containing the legacy snapshots
           const newTabData = {};
           tabs.forEach(tab => {
             newTabData[tab] = {
-              rows: defaultRows.map((row, index) => ({ ...row, id: index + 1 })),
-              snapshots: tab === 'KAUS' ? cleanedSnapshots : [] // Put cleaned legacy data in KAUS, others empty
+              snapshots: tab === 'KAUS' ? legacySnapshots : [] // Put legacy data in KAUS, others empty
             };
           });
 
@@ -465,12 +546,20 @@ export default function BracketCalculator() {
             savedAt: localISOTime,
             tabSources: newTabData,
           };
+          console.log(tabSourcesEntry)
 
           // Save only the tab_sources_config to localStorage
           saveSnapshots([tabSourcesEntry]);
 
           // Switch to KAUS tab to show the loaded data
           setActiveTab('KAUS');
+
+          // Set currentSnapshotId to the first snapshot of KAUS tab
+          if (legacySnapshots.length > 0) {
+            setCurrentSnapshotId(legacySnapshots[0].id);
+            setRows(legacySnapshots[0].rows);
+            setScheme(legacySnapshots[0].scheme);
+          }
         }
 
         // Reset file input
@@ -585,6 +674,16 @@ export default function BracketCalculator() {
                   </tr>
                 </thead>
                 <tbody>
+                  {rows.length === 0 && (
+                    <tr>
+                      <td colSpan="4" className="p-8 text-center text-gray-500">
+                        <div>
+                          <p>No sources added yet.</p>
+                          <p className="text-sm">Click "+ Add Source" to get started.</p>
+                        </div>
+                      </td>
+                    </tr>
+                  )}
                   {rows.map((r, idx) => (
                     <tr key={r.id} className={idx % 2 ? "bg-white" : "bg-gray-50"}>
                       <td className="p-2">
@@ -675,23 +774,46 @@ export default function BracketCalculator() {
 
             {/* Saved list (show ~5 items tall, scroll for more) */}
             <div className="p-4 rounded-2xl border shadow bg-white">
-              <h3 className="font-semibold mb-2">Saved forecasts (read-only)</h3>
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="font-semibold">Saved forecasts</h3>
+                {currentSnapshotId && (
+                  <button
+                    className="px-2 py-1 text-xs rounded border bg-gray-100 hover:bg-gray-200"
+                    onClick={() => {
+                      setCurrentSnapshotId('');
+                      // Reset to empty rows
+                      updateCurrentRows([]);
+                    }}
+                    title="Clear loaded snapshot and return to tab's default rows"
+                  >
+                    Clear loaded snapshot
+                  </button>
+                )}
+              </div>
               {displaySnapshots.length === 0 ? (
                 <p className="text-sm text-gray-600">No saved forecasts yet.</p>
               ) : (
                 <div className="max-h-48 overflow-y-auto">
                   <ul className="divide-y">
                     {displaySnapshots.map((s) => (
-                      <li key={s.id} className="py-2 flex items-center justify-between gap-2">
+                      <li key={s.id} className={`py-2 flex items-center justify-between gap-2`}>
                         <div>
-                          <div className="text-sm font-medium">{s.name}</div>
+                          <div className="text-sm font-medium flex items-center gap-2">
+                            {s.name}
+                          </div>
                           <div className="text-xs text-gray-600">
                             {new Date(s.savedAt).toISOString()}
                             {typeof s.actual === "number" && <span className="ml-2">• Actual: <span className="font-mono">{s.actual}</span>°</span>}
+                            {s.rows && <span className="ml-2">• {s.rows.length} sources</span>}
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <button className="px-2 py-1 rounded border bg-gray-100 hover:bg-gray-200" onClick={() => applySnapshotInputs(s.id)}>Load inputs</button>
+                          <button
+                            className={`px-2 py-1 rounded border ${currentSnapshotId === s.id ? 'bg-blue-100 border-blue-300 text-blue-700' : ''}`}
+                            onClick={() => applySnapshotInputs(s.id)}
+                          >
+                            Load inputs
+                          </button>
                           <button className="px-2 py-1 rounded border bg-gray-100 hover:bg-gray-200" onClick={() => { setUsePrior(true); setPriorId(s.id); }}>Use as prior</button>
                           <button className="px-2 py-1 rounded border bg-rose-50 text-rose-700 hover:bg-rose-100" onClick={() => handleDeleteSnapshot(s.id)}>Delete</button>
                         </div>
@@ -757,6 +879,16 @@ export default function BracketCalculator() {
                       </tr>
                     </thead>
                     <tbody>
+                      {tabScheme.length === 0 && (
+                        <tr>
+                          <td colSpan="3" className="p-8 text-center text-gray-500">
+                            <div>
+                              <p>No brackets defined yet.</p>
+                              <p className="text-sm">Click "+ Add" to create brackets.</p>
+                            </div>
+                          </td>
+                        </tr>
+                      )}
                       {tabScheme.map((b, idx) => (
                         <tr key={idx} className={idx % 2 ? "bg-white" : "bg-gray-50"}>
                           <td className="p-2"><input className="w-full px-2 py-1 rounded border" value={b.label || ""} onChange={(e) => setScheme((prev) => prev.map((bb, i) => i === idx ? { ...bb, label: e.target.value } : bb))} /></td>

@@ -49,16 +49,17 @@ export function computeBiases(snapshots, currentRows, windowSize) {
   const srcSum = new Map();
   const srcCnt = new Map();
   // Safety check for undefined or non-array snapshots
-  if (!Array.isArray(snapshots) || !Array.isArray(currentRows)) {
+  if (!Array.isArray(snapshots)) {
     return {};
   }
   const withActual = snapshots.filter((s) => typeof s.actual === "number");
   const take = windowSize > 0 ? withActual.slice(0, windowSize) : withActual;
 
-  // Use current tab's rows for all snapshots since rows are no longer in snapshots
+  // Use rows from each snapshot (new structure: snapshots contain their own rows)
   for (const s of take) {
     const actual = Number(s.actual);
-    currentRows.forEach((r) => {
+    const snapshotRows = s.rows || currentRows || []; // Fallback to currentRows if snapshot has no rows
+    snapshotRows.forEach((r) => {
       const name = r.source?.trim();
       const fc = Number(r.forecast);
       if (!name || !Number.isFinite(fc)) return;
@@ -187,17 +188,15 @@ export function calculateAccuracy(snapshots, bracketContainsActual) {
 
 export function calculatePerSourceStats(snapshots, currentRows) {
   const withActual = (snapshots || []).filter((s) => typeof s.actual === "number");
-  if (!Array.isArray(currentRows)) {
-    return [];
-  }
 
   const sums = new Map();
   const counts = new Map();
   const within = new Map();
   for (const s of withActual) {
     const actual = Number(s.actual);
-    // Use current tab's rows since rows are no longer in snapshots
-    currentRows.forEach((r) => {
+    // Use rows from each snapshot (new structure: snapshots contain their own rows)
+    const snapshotRows = s.rows || currentRows || []; // Fallback to currentRows if snapshot has no rows
+    snapshotRows.forEach((r) => {
       const name = r.source?.trim();
       const fc = Number(r.forecast);
       if (!name || !Number.isFinite(fc)) return;
