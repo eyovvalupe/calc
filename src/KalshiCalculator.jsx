@@ -10,15 +10,24 @@ export default function KalshiCalculator() {
   // Initialize deposits
   useEffect(() => {
     const initialDeposits = {};
-    marketOptions.forEach(market => {
-      initialDeposits[market.id] = 0;
-    });
+    if (Array.isArray(marketOptions)) {
+      marketOptions.forEach(market => {
+        if (market && market.id) {
+          initialDeposits[market.id] = 0;
+        }
+      });
+    }
     setDeposits(initialDeposits);
   }, []);
 
   // Calculate metrics for each market option
   const marketMetrics = useMemo(() => {
-    return calculateMarketMetrics(marketOptions, deposits);
+    try {
+      return calculateMarketMetrics(marketOptions, deposits);
+    } catch (error) {
+      console.error('Error calculating market metrics:', error);
+      return [];
+    }
   }, [marketOptions, deposits]);
 
   const handleDepositChange = (marketId, value) => {

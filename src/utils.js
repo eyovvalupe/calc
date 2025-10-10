@@ -127,6 +127,10 @@ export function handleUploadData(e, saveSnapshots, setSnapshots, setPriorId, set
 }
 
 export function calculateMarketMetrics(marketOptions, deposits) {
+  // Safety checks for inputs
+  if (!Array.isArray(marketOptions)) return [];
+  if (!deposits || typeof deposits !== 'object') deposits = {};
+
   const totalInvestment = Object.values(deposits).reduce((sum, deposit) => sum + deposit, 0);
 
   return marketOptions.map(market => {
@@ -279,9 +283,10 @@ export function calculateBlendedProbs(usePrior, priorId, baseProbs, snapshots, s
   const snap = snapshots.find((s) => s.id === priorId);
   if (!snap) return baseProbs;
   const sameLength = snap.scheme?.length === scheme.length;
-  const sameLabels = sameLength && snap.scheme.every((b, i) => b.label === scheme[i].label);
+  // Safely check if schemes have same labels
+  const sameLabels = sameLength && Array.isArray(snap.scheme) && snap.scheme.every((b, i) => b?.label === scheme[i]?.label);
   if (!sameLabels) return baseProbs;
-  const prior = snap.probs;
+  const prior = snap.probs || [];
   const out = baseProbs.map((x, i) => 0.5 * x + 0.5 * (prior[i] || 0));
   const s = out.reduce((a, b) => a + b, 0) || 1;
   return out.map((v) => v / s);

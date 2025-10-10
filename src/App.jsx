@@ -84,8 +84,8 @@ export default function BracketCalculator() {
 
   // Get current tab's data (rows and snapshots)
   const currentTabInfo = tabData[activeTab] || { rows: [], snapshots: [] };
-  const tabSnapshots = currentTabInfo.snapshots;
-  const tabRows = currentTabInfo.rows;
+  const tabSnapshots = Array.isArray(currentTabInfo.snapshots) ? currentTabInfo.snapshots : [];
+  const tabRows = Array.isArray(currentTabInfo.rows) ? currentTabInfo.rows : [];
 
   // Global state for current session (not tab-specific)
   const [scheme, setScheme] = useState(() => {
@@ -249,13 +249,37 @@ export default function BracketCalculator() {
     });
   }, [normalizedRows, useBias, biases]);
   const baseProbs = useMemo(() => {
-    return calculateBaseProbs(adjustedRows, tabScheme, findBracket, clamp);
+    try {
+      return calculateBaseProbs(adjustedRows, tabScheme, findBracket, clamp);
+    } catch (error) {
+      console.error('Error calculating base probabilities:', error);
+      return Array.isArray(tabScheme) ? Array(tabScheme.length).fill(0) : [];
+    }
   }, [adjustedRows, tabScheme]);
   const blendedProbs = useMemo(() => {
-    return calculateBlendedProbs(usePrior, priorId, baseProbs, displaySnapshots, tabScheme);
+    try {
+      return calculateBlendedProbs(usePrior, priorId, baseProbs, displaySnapshots, tabScheme);
+    } catch (error) {
+      console.error('Error calculating blended probabilities:', error);
+      return baseProbs || [];
+    }
   }, [usePrior, priorId, baseProbs, displaySnapshots, tabScheme]);
-  const rounded = useMemo(() => blendedProbs.map((x) => Math.round(x * 1000) / 10), [blendedProbs]);
-  const sumRounded = rounded.reduce((s, x) => s + x, 0);
+  const rounded = useMemo(() => {
+    try {
+      return Array.isArray(blendedProbs) ? blendedProbs.map((x) => Math.round((x || 0) * 1000) / 10) : [];
+    } catch (error) {
+      console.error('Error calculating rounded probabilities:', error);
+      return [];
+    }
+  }, [blendedProbs]);
+  const sumRounded = useMemo(() => {
+    try {
+      return Array.isArray(rounded) ? rounded.reduce((s, x) => s + (x || 0), 0) : 0;
+    } catch (error) {
+      console.error('Error calculating sum of rounded probabilities:', error);
+      return 0;
+    }
+  }, [rounded]);
 
   // Helper: keep auto-weights toggle in sync and clear overrides when turning off
   function handleSetUseAutoWeights(checked) {
