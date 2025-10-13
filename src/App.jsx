@@ -199,8 +199,7 @@ export default function BracketCalculator() {
   useEffect(() => {
     const newTabSnapshots = tabData[activeTab]?.snapshots || [];
     const workingState = newTabSnapshots.find(s => s.id === 'working_state');
-
-    if (workingState && workingState.rows) {
+    if (workingState && workingState.rows.length) {
       setRows(workingState.rows);
       if (workingState.scheme) {
         setScheme(workingState.scheme);
@@ -208,6 +207,7 @@ export default function BracketCalculator() {
       setUseAutoWeights(workingState.weightMode === "auto");
     } else {
       // No working state, use empty rows
+      setUseAutoWeights(false);
       setRows([]);
     }
   }, [activeTab]); // Dependency on active tab changes
@@ -238,8 +238,6 @@ export default function BracketCalculator() {
       setTabData(migratedTabData);
     }
   }, []);
-
-
 
   // Use current tab's snapshots (filter out working state)
   const displaySnapshots = tabSnapshots.filter(s => s.id !== 'working_state');
