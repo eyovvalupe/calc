@@ -672,7 +672,7 @@ export default function BracketCalculator() {
                     type="checkbox"
                     checked={useAutoWeights}
                     onChange={(e) => handleSetUseAutoWeights(e.target.checked)}
-                    disabled={perSourceStats.length === 0}
+                  // disabled={perSourceStats.length === 0}
                   />
                   <span>Auto-weights from accuracy</span>
                 </label>
@@ -688,12 +688,16 @@ export default function BracketCalculator() {
               )}
               <table className="min-w-full text-sm">
                 <thead>
-                  <tr>
-                    <th className="p-3 text-left">Source</th>
-                    <th className="p-3 text-right">Forecast (°F)</th>
-                    <th className="p-3 text-right">Weight{useAutoWeights ? " (auto)" : ""}</th>
-                    <th className="p-3 text-center">Actions</th>
-                  </tr>
+                  {
+                    rows.length > 0 && (
+                      <tr>
+                        <th className="p-3 text-left">Source</th>
+                        <th className="p-3 text-right">Forecast (°F)</th>
+                        <th className="p-3 text-right">Weight{useAutoWeights ? " (auto)" : ""}</th>
+                        <th className="p-3 text-center">Actions</th>
+                      </tr>
+                    )
+                  }
                 </thead>
                 <tbody>
                   {rows.length === 0 && (
