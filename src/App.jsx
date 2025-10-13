@@ -407,7 +407,10 @@ export default function BracketCalculator() {
       scheme: tabScheme,
       probs,
       weightMode: useAutoWeights ? "auto" : "manual",
-      rows: rows.map(r => ({ ...r })), // Save current rows data with the snapshot
+      rows: rows.map(r => {
+        if (useAutoWeights) return { ...r, weight: autoWeightsMap[r.source] || 0 };
+        return { ...r };
+      }), // Save current rows data with the snapshot
     };
 
     // Add to current tab's snapshots
