@@ -381,6 +381,19 @@ export default function BracketCalculator() {
     updateCurrentRows(updatedRows);
   }
 
+  // Helper function to redistribute weights equally
+  function redistributeWeightsEqually() {
+    const totalSources = rows.length;
+    const equalWeight = totalSources > 0 ? (1 / totalSources).toFixed(3) : 0;
+
+    const newRows = rows.map(row => ({
+      ...row,
+      weight: equalWeight
+    }));
+
+    updateCurrentRows(newRows);
+  }
+
   // Snapshot actions - Save to current tab
   function handleSaveSnapshot() {
     const id = `${Date.now()}`;
@@ -635,7 +648,7 @@ export default function BracketCalculator() {
               <div className="px-3 pt-3 pb-1 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="text-sm font-medium">Source Forecast (°F) Weight</div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 mr-2">
                     <button
                       onClick={addSource}
                       className="px-2 py-1 text-xs bg-green-100 text-green-700 rounded hover:bg-green-200 transition-colors"
@@ -643,6 +656,15 @@ export default function BracketCalculator() {
                     >
                       + Add Source
                     </button>
+                    {rows.length > 1 && (
+                      <button
+                        onClick={redistributeWeightsEqually}
+                        className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
+                        title="Reset all weights to equal distribution"
+                      >
+                        Equal Weights
+                      </button>
+                    )}
                   </div>
                 </div>
                 <label className="flex items-center gap-2 text-xs">
@@ -685,7 +707,7 @@ export default function BracketCalculator() {
                     </tr>
                   )}
                   {rows.map((r, idx) => (
-                    <tr key={r.id} className={idx % 2 ? "bg-white" : "bg-gray-50"}>
+                    <tr key={idx} className={idx % 2 ? "bg-white" : "bg-gray-50"}>
                       <td className="p-2">
                         <input
                           className="w-full px-2 py-1 rounded border focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -915,8 +937,8 @@ export default function BracketCalculator() {
                 <span className="text-xs text-gray-600">(0 = all)</span>
               </div>
               <ul className="grid grid-cols-2 gap-x-4 text-xs">
-                {biasPreview.map((b) => (
-                  <li key={b.source} className="flex justify-between"><span>{b.source}</span><span className="font-mono">{(b.bias >= 0 ? "+" : "") + b.bias}</span></li>
+                {biasPreview.map((b, i) => (
+                  <li key={i} className="flex justify-between"><span>{b.source}</span><span className="font-mono">{(b.bias >= 0 ? "+" : "") + b.bias}</span></li>
                 ))}
               </ul>
               <div className="mt-3">
