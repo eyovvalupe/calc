@@ -17,6 +17,7 @@ import {
   calculateBaseProbs,
   calculateBlendedProbs
 } from './utils.js';
+import { defaultScheme } from './types.js';
 import KalshiCalculator from './KalshiCalculator.jsx';
 
 // ===== KAUS BRACKET CALCULATOR — Compact Stable Build =====
@@ -90,11 +91,11 @@ export default function BracketCalculator() {
 
   // Global state for current session (not tab-specific)
   const [scheme, setScheme] = useState(() => {
-    // Safely access the first snapshot's scheme, no default fallback
+    // Safely access the first snapshot's scheme, fallback to default scheme
     if (tabSnapshots && tabSnapshots.length > 0 && tabSnapshots[0]?.scheme) {
       return tabSnapshots[0].scheme;
     }
-    return []; // Empty scheme if no data
+    return defaultScheme; // Use default scheme if no data
   });
   const [currentSnapshotId, setCurrentSnapshotId] = useState(() => {
     // Safely access the first snapshot's id, fallback to empty string
@@ -134,35 +135,43 @@ export default function BracketCalculator() {
     }
   };
 
-  // Helper function to save working state to tab data
+  // Helper function to save working state to tab data (debounced)
   const saveWorkingStateToTab = (workingRows) => {
-    // Save rows with actual weights used
-    const rowsWithActualWeights = workingRows.map(r => {
-      const actualWeight = useAutoWeights && autoWeightsMap ?
-        (autoWeightsMap[r.source] || 0) :
-        (r.weight || 0);
+    // Clear any existing timeout
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+    }
 
-      return {
-        ...r,
-        weight: actualWeight // Save the actual weight that was used
+    // Debounce the save operation to prevent infinite loops
+    saveTimeoutRef.current = setTimeout(() => {
+      // Save rows with actual weights used
+      const rowsWithActualWeights = workingRows.map(r => {
+        const actualWeight = useAutoWeights && autoWeightsMap ?
+          (autoWeightsMap[r.source] || 0) :
+          (r.weight || 0);
+
+        return {
+          ...r,
+          weight: actualWeight // Save the actual weight that was used
+        };
+      });
+
+      // Save current working state as a special "working" snapshot in the tab
+      const workingSnapshot = {
+        id: 'working_state',
+        name: 'Working State (Auto-saved)',
+        savedAt: new Date().toISOString(),
+        scheme: scheme,
+        rows: rowsWithActualWeights,
+        weightMode: useAutoWeights ? "auto" : "manual", // Track how this was saved
+        isWorkingState: true // Mark as working state
       };
-    });
 
-    // Save current working state as a special "working" snapshot in the tab
-    const workingSnapshot = {
-      id: 'working_state',
-      name: 'Working State (Auto-saved)',
-      savedAt: new Date().toISOString(),
-      scheme: scheme,
-      rows: rowsWithActualWeights,
-      weightMode: useAutoWeights ? "auto" : "manual", // Track how this was saved
-      isWorkingState: true // Mark as working state
-    };
-
-    // Update or add working state snapshot
-    const updatedSnapshots = tabSnapshots.filter(s => s.id !== 'working_state');
-    updatedSnapshots.unshift(workingSnapshot); // Add at beginning
-    updateTabSnapshots(updatedSnapshots);
+      // Update or add working state snapshot
+      const updatedSnapshots = tabSnapshots.filter(s => s.id !== 'working_state');
+      updatedSnapshots.unshift(workingSnapshot); // Add at beginning
+      updateTabSnapshots(updatedSnapshots);
+    }, 300); // 300ms debounce delay
   };
 
   // Helper function to update current rows and save working state
@@ -187,7 +196,7 @@ export default function BracketCalculator() {
     };
 
     setTabData(newTabData);
-    saveTabDataToStorage(newTabData);
+    // Note: saveTabDataToStorage is called by useEffect when tabData changes
   };
 
 
@@ -199,6 +208,11 @@ export default function BracketCalculator() {
 
   const [saveName, setSaveName] = useState(defaultSaveLabel());
 
+  // Ref to prevent infinite loops in auto-save
+  const isSavingRef = useRef(false);
+  const saveTimeoutRef = useRef(null);
+  const userChangedWeightModeRef = useRef(false);
+
   // Auto-save working state when scheme changes
   useEffect(() => {
     if (rows.length > 0) { // Only save if we have rows data
@@ -208,13 +222,23 @@ export default function BracketCalculator() {
 
   // Auto-save tabData to localStorage whenever it changes
   useEffect(() => {
-    if (Object.keys(tabData).length > 0) {
+    if (Object.keys(tabData).length > 0 && !isSavingRef.current) {
+      isSavingRef.current = true;
       saveTabDataToStorage(tabData);
+      // Reset the flag after a short delay to allow for the save operation
+      setTimeout(() => {
+        isSavingRef.current = false;
+      }, 100);
     }
   }, [tabData]); // Dependency on tabData changes
 
   // Load working state when switching tabs (only for initial load)
   useEffect(() => {
+    // Don't override if user just manually changed the weight mode
+    if (userChangedWeightModeRef.current) {
+      return;
+    }
+
     // Only run on initial load, not on tab switches (handled by onClick)
     const newTabSnapshots = tabData[activeTab]?.snapshots || [];
     const workingState = newTabSnapshots.find(s => s.id === 'working_state');
@@ -229,6 +253,7 @@ export default function BracketCalculator() {
       // No working state, use empty rows and check first snapshot for weight mode
       setRows([]);
       const firstSnapshot = newTabSnapshots.find(s => s.id !== 'working_state');
+      setScheme(firstSnapshot?.scheme || defaultScheme); // Use snapshot scheme or default
       setUseAutoWeights(firstSnapshot?.weightMode === "auto" || false);
     }
   }, [tabData]); // Dependency on tabData changes (initial load)
@@ -314,6 +339,8 @@ export default function BracketCalculator() {
   }, [rows, useAutoWeights, autoWeightsMap, autoWeightsOverride]);
 
   // Accuracy trend data (chronological cumulative %) - tab-specific
+  // Only recalculate when tab changes or snapshots are added/removed, not when loading individual snapshots
+  // This prevents unnecessary re-renders when clicking "Load inputs"
   const accuracyTrendData = useMemo(() => {
     return calculateAccuracyTrendData(displaySnapshots, bracketContainsActual);
   }, [displaySnapshots]);
@@ -367,11 +394,17 @@ export default function BracketCalculator() {
 
   // Helper: keep auto-weights toggle in sync and clear overrides when turning off
   function handleSetUseAutoWeights(checked) {
+    userChangedWeightModeRef.current = true; // Mark as user-initiated change
     setUseAutoWeights(checked);
     if (!checked) setAutoWeightsOverride(null);
 
     // Auto-save working state when weight mode changes
     saveWorkingStateToTab(rows);
+
+    // Reset the flag after a short delay
+    setTimeout(() => {
+      userChangedWeightModeRef.current = false;
+    }, 500);
   }
 
   // Functions to manage sources
@@ -652,12 +685,18 @@ export default function BracketCalculator() {
                     if (workingState.scheme) {
                       setScheme(workingState.scheme);
                     }
-                    setUseAutoWeights(workingState.weightMode === "auto");
+                    // Only set weight mode if user hasn't manually changed it recently
+                    if (!userChangedWeightModeRef.current) {
+                      setUseAutoWeights(workingState.weightMode === "auto");
+                    }
                   } else {
                     // No working state, use empty data and check first snapshot for weight mode
                     setRows([]);
-                    setScheme([]);
-                    setUseAutoWeights(firstSnapshot?.weightMode === "auto" || false);
+                    setScheme(firstSnapshot?.scheme || defaultScheme); // Use snapshot scheme or default
+                    // Only set weight mode if user hasn't manually changed it recently
+                    if (!userChangedWeightModeRef.current) {
+                      setUseAutoWeights(firstSnapshot?.weightMode === "auto" || false);
+                    }
                   }
                 }}
                 className={`flex-1 px-3 py-3 text-sm font-semibold text-center transition-all duration-200 relative group ${activeTab === tab
