@@ -75,7 +75,6 @@ export default function BracketCalculator() {
     }
 
     // Fallback to completely empty initialization - no default data
-    console.log("No existing data found, initializing all tabs with empty snapshots");
     const initialTabData = {};
     tabs.forEach(tab => {
       initialTabData[tab] = {
@@ -137,14 +136,26 @@ export default function BracketCalculator() {
 
   // Helper function to save working state to tab data
   const saveWorkingStateToTab = (workingRows) => {
+    // Save rows with actual weights used
+    const rowsWithActualWeights = workingRows.map(r => {
+      const actualWeight = useAutoWeights && autoWeightsMap ?
+        (autoWeightsMap[r.source] || 0) :
+        (r.weight || 0);
+
+      return {
+        ...r,
+        weight: actualWeight // Save the actual weight that was used
+      };
+    });
+
     // Save current working state as a special "working" snapshot in the tab
     const workingSnapshot = {
       id: 'working_state',
       name: 'Working State (Auto-saved)',
       savedAt: new Date().toISOString(),
       scheme: scheme,
-      rows: workingRows,
-      weightMode: useAutoWeights ? "auto" : "manual",
+      rows: rowsWithActualWeights,
+      weightMode: useAutoWeights ? "auto" : "manual", // Track how this was saved
       isWorkingState: true // Mark as working state
     };
 
@@ -195,8 +206,16 @@ export default function BracketCalculator() {
     }
   }, [scheme]); // Dependency on scheme changes
 
-  // Load working state when switching tabs
+  // Auto-save tabData to localStorage whenever it changes
   useEffect(() => {
+    if (Object.keys(tabData).length > 0) {
+      saveTabDataToStorage(tabData);
+    }
+  }, [tabData]); // Dependency on tabData changes
+
+  // Load working state when switching tabs (only for initial load)
+  useEffect(() => {
+    // Only run on initial load, not on tab switches (handled by onClick)
     const newTabSnapshots = tabData[activeTab]?.snapshots || [];
     const workingState = newTabSnapshots.find(s => s.id === 'working_state');
 
@@ -207,10 +226,12 @@ export default function BracketCalculator() {
       }
       setUseAutoWeights(workingState.weightMode === "auto");
     } else {
-      // No working state, use empty rows
+      // No working state, use empty rows and check first snapshot for weight mode
       setRows([]);
+      const firstSnapshot = newTabSnapshots.find(s => s.id !== 'working_state');
+      setUseAutoWeights(firstSnapshot?.weightMode === "auto" || false);
     }
-  }, [activeTab]); // Dependency on active tab changes
+  }, [tabData]); // Dependency on tabData changes (initial load)
   const [actualInput, setActualInput] = useState("");
   const [actualAttachIds, setActualAttachIds] = useState([]);
 
@@ -219,7 +240,6 @@ export default function BracketCalculator() {
 
     // If no data in localStorage, ensure all tabs start with empty lists
     if (loadedSnapshots.length === 0) {
-      console.log("No data in localStorage, initializing with empty tabs");
       return; // tabData is already initialized with empty arrays
     }
 
@@ -227,7 +247,6 @@ export default function BracketCalculator() {
     const tabSourcesConfig = loadedSnapshots.find(s => s.id === 'tab_sources_config');
     if (!tabSourcesConfig && loadedSnapshots.length > 0) {
       // Migrate existing snapshots to KAUS tab for backward compatibility
-      console.log("Migrating legacy snapshots to KAUS tab");
       const legacySnapshots = loadedSnapshots.filter(s => s.id !== 'tab_sources_config');
 
       // Legacy snapshots already have rows data, save them directly
@@ -274,7 +293,12 @@ export default function BracketCalculator() {
   }, [displaySnapshots, rows]);
 
   // === Auto-Weights (inverse-MAE) === - Global settings
-  const [useAutoWeights, setUseAutoWeights] = useState(true);
+  const [useAutoWeights, setUseAutoWeights] = useState(() => {
+    // Check the current tab's first snapshot for initial weight mode
+    const currentTabSnapshots = tabData[activeTab]?.snapshots || [];
+    const firstSnapshot = currentTabSnapshots.find(s => s.id !== 'working_state');
+    return firstSnapshot?.weightMode === "auto" || false;
+  });
   const [autoWeightsOverride, setAutoWeightsOverride] = useState(null);
 
   const autoWeightsMap = useMemo(() => {
@@ -357,7 +381,6 @@ export default function BracketCalculator() {
     const existingIds = safeRows.map(r => r?.id || 0);
     const newId = Math.max(0, ...existingIds) + 1;
     const newRows = [...safeRows, { id: newId, source: "", forecast: 0, weight: 0 }];
-    console.log(newRows)
     updateCurrentRows(newRows);
   }
 
@@ -400,14 +423,27 @@ export default function BracketCalculator() {
     const now = new Date();
     const localISOTime = now.toISOString();
     const probs = blendedProbs.slice();
+
+    // Save rows with actual weights that were used
+    const rowsWithActualWeights = rows.map(r => {
+      const actualWeight = useAutoWeights && autoWeightsMap ?
+        (autoWeightsMap[r.source] || 0) :
+        (r.weight || 0);
+
+      return {
+        ...r,
+        weight: actualWeight // Save the actual weight that was used
+      };
+    });
+
     const payload = {
       id,
       savedAt: localISOTime,
       name: saveName || defaultSaveLabel(),
       scheme: tabScheme,
       probs,
-      weightMode: useAutoWeights ? "auto" : "manual",
-      rows: rows.map(r => ({ ...r })), // Save current rows data with the snapshot
+      weightMode: useAutoWeights ? "auto" : "manual", // This tracks how the snapshot was saved
+      rows: rowsWithActualWeights, // Save rows with actual weights used
     };
 
     // Add to current tab's snapshots
@@ -459,40 +495,39 @@ export default function BracketCalculator() {
   function applySnapshotInputs(id) {
     setCurrentSnapshotId(id);
     const snap = tabSnapshots.find((s) => s.id === id);
+
     if (!snap) {
       console.error("Snapshot not found:", id);
       return;
     }
 
-    // Apply the snapshot's data to current session
-    console.log("Loading snapshot:", snap.name, "with rows:", snap.rows);
-
-    // Load rows data from snapshot
     if (snap.rows && Array.isArray(snap.rows)) {
-      console.log("Loading rows from snapshot:", snap.rows);
       updateCurrentRows(snap.rows);
     } else {
       console.warn("No rows data in snapshot, keeping current rows");
     }
 
-    // Load scheme from snapshot
     if (snap.scheme) {
-      console.log("Loading scheme:", snap.scheme);
       setScheme(snap.scheme);
+      // console.log(snap.scheme)
     } else {
       console.warn("No scheme in snapshot, keeping current scheme");
     }
 
-    // Load weight mode and settings
     const wasAuto = snap.weightMode === "auto";
-    console.log("Weight mode:", snap.weightMode, "wasAuto:", wasAuto);
     setUseAutoWeights(wasAuto);
+
     if (wasAuto) {
-      const o = {};
-      (snap.rows || []).forEach((r) => { if (r?.source) o[r.source] = Number(r.weight) || 0; });
-      setAutoWeightsOverride(o);
-      console.log("Set auto weights override:", o);
+      // For auto weights: extract the saved auto weights from rows
+      const autoWeights = {};
+      (snap.rows || []).forEach((r) => {
+        if (r?.source && r.source.trim()) {
+          autoWeights[r.source] = Number(r.weight) || 0;
+        }
+      });
+      setAutoWeightsOverride(autoWeights);
     } else {
+      // For manual weights: weights are in the rows data
       setAutoWeightsOverride(null);
     }
   }
@@ -559,7 +594,6 @@ export default function BracketCalculator() {
             savedAt: localISOTime,
             tabSources: newTabData,
           };
-          console.log(tabSourcesEntry)
 
           // Save only the tab_sources_config to localStorage
           saveSnapshots([tabSourcesEntry]);
@@ -598,7 +632,34 @@ export default function BracketCalculator() {
             {tabs.map((tab, index) => (
               <button
                 key={tab}
-                onClick={() => setActiveTab(tab)}
+                onClick={() => {
+                  // Save current working state to current tab before switching
+                  if (rows.length > 0 || scheme.length > 0) {
+                    saveWorkingStateToTab(rows);
+                  }
+
+                  // Switch to new tab
+                  setActiveTab(tab);
+
+                  // Load new tab's data
+                  const newTabSnapshots = tabData[tab]?.snapshots || [];
+                  const workingState = newTabSnapshots.find(s => s.id === 'working_state');
+                  const firstSnapshot = newTabSnapshots.find(s => s.id !== 'working_state');
+
+                  if (workingState && workingState.rows) {
+                    // Load working state
+                    setRows(workingState.rows);
+                    if (workingState.scheme) {
+                      setScheme(workingState.scheme);
+                    }
+                    setUseAutoWeights(workingState.weightMode === "auto");
+                  } else {
+                    // No working state, use empty data and check first snapshot for weight mode
+                    setRows([]);
+                    setScheme([]);
+                    setUseAutoWeights(firstSnapshot?.weightMode === "auto" || false);
+                  }
+                }}
                 className={`flex-1 px-3 py-3 text-sm font-semibold text-center transition-all duration-200 relative group ${activeTab === tab
                   ? 'text-blue-700 bg-white shadow-sm border-b-2 border-blue-600 -mb-px z-10'
                   : 'text-gray-600 hover:text-blue-600 hover:bg-white/50'
@@ -818,6 +879,7 @@ export default function BracketCalculator() {
                             {new Date(s.savedAt).toISOString()}
                             {typeof s.actual === "number" && <span className="ml-2">• Actual: <span className="font-mono">{s.actual}</span>°</span>}
                             {s.rows && <span className="ml-2">• {s.rows.length} sources</span>}
+                            {s.weightMode && <span className="ml-2">• {s.weightMode} weights</span>}
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
